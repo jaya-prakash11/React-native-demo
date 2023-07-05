@@ -1,48 +1,70 @@
-import React, { useState } from 'react';
-import { StyleSheet, Text, View, SafeAreaView, ScrollView, Button, Linking } from 'react-native';
-
+import React, {useState} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  ScrollView,
+  Button,
+  Linking,
+} from 'react-native';
 
 export default function App() {
-  const [name, setName] = useState('jp');
-  const [session, setSession] = useState({ number: 6, title: 'state' });
-  const [current , setCurrent ] = useState(true)
+  const [currentItems, setCurrentItems] = useState([
+    {key: 1, item: 'item1'},
+    {key: 2, item: 'item2'},
+    {key: 3, item: 'item3'},
+    {key: 4, item: 'item4'},
+    {key: 5, item: 'item5'},
+    {key: 6, item: 'item6'},
+    {key: 7, item: 'item7'},
+    {key: 8, item: 'item8'},
+    {key: 9, item: 'item9'},
+    {key: 10, item: 'item10'},
+    {key: 11, item: 'item11'},
+  ]);
+
   const onClickHandler = () => {
-    setName('jp1')
-    setSession({ number: 7, title: 'style' })
-    setCurrent(false)
-  }
+    setName('jp1');
+    setSession({number: 7, title: 'style'});
+    setCurrent(false);
+  };
   return (
-      <View style={styles.body}>
-        <Text style={styles.text}>{name}</Text>
-        <View style={styles.button}>
-        <Button
-          title="youtube channel"
-          onPress={onClickHandler}
-          />
-        </View>
+    <View style={styles.body}>
+      {currentItems.map(res => {
+        return (
+          <View style={styles.item}>
+            <Text style={styles.text}>{res.item}</Text>
+          </View>
+        );
+      })}
     </View>
   );
 }
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
   body: {
-    width:'100%',
-    height:'50%',
-    backgroundColor: '#ffff',
-    alignItems: 'center',
-    borderWidth: 10,
-    borderColor:'red',
-    justifyContent: 'center',
-    alignItems:'center'
+    // flex: 1,
+    width: '100%',
+    height: '100%',
+    flexDirection: 'column',
+    backgroundColor: 'blue',
+    justifyContent: 'flex-start',
   },
-  text:{
+  item: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    gap: 23,
+    backgroundColor: 'white',
+  },
+  text: {
     color: 'black',
     fontSize: 40,
     fontStyle: 'italic',
-    margin:10
+    margin: 10,
   },
   button: {
     width: 200,
-    height:40
-  }
+    height: 40,
+  },
 });
