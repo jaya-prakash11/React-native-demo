@@ -7,6 +7,7 @@ import {
   ScrollView,
   Button,
   Linking,
+  RefreshControl,
 } from 'react-native';
 
 export default function App() {
@@ -22,22 +23,36 @@ export default function App() {
     {key: 9, item: 'item9'},
     {key: 10, item: 'item10'},
     {key: 11, item: 'item11'},
+    {key: 12, item: 'item12'},
+    {key: 13, item: 'item13'},
+    {key: 14, item: 'item14'},
   ]);
 
-  const onClickHandler = () => {
-    setName('jp1');
-    setSession({number: 7, title: 'style'});
-    setCurrent(false);
+  const [refreshing, setRefreshing] = useState(false);
+
+  const refreshHanlde = () => {
+    setRefreshing(true);
+    setCurrentItems([...currentItems, {key: 15, item: 'item15'}]);
+    setRefreshing(false);
   };
+
   return (
     <View style={styles.body}>
-      {currentItems.map(res => {
-        return (
-          <View style={styles.item}>
-            <Text style={styles.text}>{res.item}</Text>
-          </View>
-        );
-      })}
+      <ScrollView
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={() => refreshHanlde()}
+          />
+        }>
+        {currentItems.map(res => {
+          return (
+            <View style={styles.item} key={res.key}>
+              <Text style={styles.text}>{res.item}</Text>
+            </View>
+          );
+        })}
+      </ScrollView>
     </View>
   );
 }
@@ -48,14 +63,15 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     flexDirection: 'column',
-    backgroundColor: 'blue',
+    backgroundColor: 'white',
     justifyContent: 'flex-start',
   },
   item: {
     alignItems: 'center',
     justifyContent: 'center',
     gap: 23,
-    backgroundColor: 'white',
+    backgroundColor: 'blue',
+    margin: 3,
   },
   text: {
     color: 'black',
