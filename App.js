@@ -8,52 +8,92 @@ import {
   Button,
   Linking,
   RefreshControl,
+  FlatList,
+  SectionList,
 } from 'react-native';
 
 export default function App() {
   const [currentItems, setCurrentItems] = useState([
-    {key: 1, item: 'item1'},
-    {key: 2, item: 'item2'},
-    {key: 3, item: 'item3'},
-    {key: 4, item: 'item4'},
-    {key: 5, item: 'item5'},
-    {key: 6, item: 'item6'},
-    {key: 7, item: 'item7'},
-    {key: 8, item: 'item8'},
-    {key: 9, item: 'item9'},
-    {key: 10, item: 'item10'},
-    {key: 11, item: 'item11'},
-    {key: 12, item: 'item12'},
-    {key: 13, item: 'item13'},
-    {key: 14, item: 'item14'},
+    {name: 'item1'},
+    {name: 'item2'},
+    {name: 'item3'},
+    {name: 'item4'},
+    {name: 'item5'},
+    {name: 'item6'},
+    {name: 'item7'},
+    {name: 'item8'},
+    {name: 'item9'},
+    {name: 'item10'},
+    {name: 'item11'},
+    {name: 'item12'},
+    {name: 'item13'},
   ]);
 
   const [refreshing, setRefreshing] = useState(false);
 
   const refreshHanlde = () => {
     setRefreshing(true);
-    setCurrentItems([...currentItems, {key: 15, item: 'item15'}]);
+    setCurrentItems([...currentItems, {name: 'item15'}]);
     setRefreshing(false);
   };
 
+  const DATA = [
+    {
+      title: 'Title1',
+      data: ['abc-1', 'abc-1', 'abc-1'],
+    },
+    {
+      title: 'Title2',
+      data: ['abc-2', 'abc-2', 'abc-2'],
+    },
+    {
+      title: 'Title3',
+      data: ['abc-3', 'abc3', 'abc-3'],
+    },
+    {
+      title: 'Title4',
+      data: ['abc-4', 'abc-4', 'abc-4'],
+    },
+    {
+      title: 'Title5',
+      data: ['abc-5', 'abc-5', 'abc-5'],
+    },
+  ];
+
   return (
     <View style={styles.body}>
-      <ScrollView
-        refreshControl={
-          <RefreshControl
-            refreshing={refreshing}
-            onRefresh={() => refreshHanlde()}
-          />
-        }>
-        {currentItems.map(res => {
-          return (
-            <View style={styles.item} key={res.key}>
-              <Text style={styles.text}>{res.item}</Text>
-            </View>
-          );
-        })}
-      </ScrollView>
+      <SectionList
+        keyExstractor={(item, index) => index.toString()}
+        sections={DATA}
+        renderItem={({item}) => (
+          <View style={styles.item}>
+            <Text style={styles.text}>{item}</Text>
+          </View>
+        )}
+        renderSectionHeader={({section}) => (
+          <View style={styles.item}>
+            <Text style={styles.text}>{section.title}</Text>
+          </View>
+        )}
+      />
     </View>
+    // <View style={styles.body}>
+    //   <ScrollView
+    //     refreshControl={
+    //       <RefreshControl
+    //         refreshing={refreshing}
+    //         onRefresh={() => refreshHanlde()}
+    //       />
+    //     }>
+    //     {currentItems.map(res => {
+    //       return (
+    //         <View style={styles.item} key={res.key}>
+    //           <Text style={styles.text}>{res.item}</Text>
+    //         </View>
+    //       );
+    //     })}
+    //   </ScrollView>
+    // </View>
   );
 }
 
